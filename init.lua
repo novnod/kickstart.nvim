@@ -421,6 +421,15 @@ require('lazy').setup({
         })
       end, { desc = '[/] Fuzzily search in current buffer' })
 
+      vim.opt.grepprg = 'rg --vimgrep'
+      vim.opt.grepformat = '%f:%l:%c:%m'
+
+      -- Automatically open quickfix after grep
+      vim.api.nvim_create_autocmd('QuickFixCmdPost', {
+        pattern = { '*grep*' },
+        command = 'cwindow',
+      })
+
       -- It's also possible to pass additional configuration options.
       --  See `:help telescope.builtin.live_grep()` for information about particular keys
       vim.keymap.set('n', '<leader>s/', function()
